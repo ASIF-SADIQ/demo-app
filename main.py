@@ -190,6 +190,7 @@ def _press(token):
 for key, initial_value in (
 	("expression", ""),
 	("answer_value", 0),
+	("previous_expression", ""),
 	("last_result", ""),
 	("calculation_error", ""),
 	("history", []),
