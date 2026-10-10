@@ -20,7 +20,7 @@ st.markdown(
             radial-gradient(circle at 50% -20%, rgba(37, 99, 235, 0.08), transparent 55%),
             radial-gradient(circle at 100% 100%, rgba(14, 165, 233, 0.04), transparent 40%),
             #f8fafc;
-        color: #1e293b;
+        color: #87047;
         font-family: 'Plus Jakarta Sans', sans-serif;
     }
 
@@ -40,7 +40,7 @@ st.markdown(
         font-size: 1.25rem;
         font-weight: 800;
         letter-spacing: -0.02em;
-        color: #0f172a;
+        color: #867e7a;
         margin: 0;
     }
     .brand-subtitle {
@@ -48,7 +48,7 @@ st.markdown(
         font-size: 0.72rem;
         text-transform: uppercase;
         letter-spacing: 0.1em;
-        color: #2563eb;
+        color: #f4935e;
         margin-top: 0.2rem;
     }
     .designer-badge {
@@ -56,7 +56,7 @@ st.markdown(
         font-size: 0.75rem;
         background: rgba(37, 99, 235, 0.08);
         border: 1px solid rgba(37, 99, 235, 0.2);
-        color: #2563eb;
+        color: #5e8ef4;
         padding: 0.25rem 0.75rem;
         border-radius: 20px;
         letter-spacing: 0.05em;
