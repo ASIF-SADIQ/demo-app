@@ -13,14 +13,14 @@ st.markdown(
     <style>
     @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
     
-    :root { color-scheme: dark; }
+    :root { color-scheme: light; }
 
     .stApp {
         background: 
-            radial-gradient(circle at 50% -20%, rgba(52, 211, 153, 0.12), transparent 55%),
-            radial-gradient(circle at 100% 100%, rgba(16, 185, 129, 0.05), transparent 40%),
-            #0b0f0e;
-        color: #f1f5f3;
+            radial-gradient(circle at 50% -20%, rgba(37, 99, 235, 0.08), transparent 55%),
+            radial-gradient(circle at 100% 100%, rgba(14, 165, 233, 0.04), transparent 40%),
+            #f8fafc;
+        color: #1e293b;
         font-family: 'Plus Jakarta Sans', sans-serif;
     }
 
@@ -33,14 +33,14 @@ st.markdown(
         justify-content: space-between;
         align-items: flex-end;
         margin-bottom: 1.5rem;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.08);
         padding-bottom: 1rem;
     }
     .brand-title {
         font-size: 1.25rem;
         font-weight: 800;
         letter-spacing: -0.02em;
-        color: #ffffff;
+        color: #0f172a;
         margin: 0;
     }
     .brand-subtitle {
@@ -48,15 +48,15 @@ st.markdown(
         font-size: 0.72rem;
         text-transform: uppercase;
         letter-spacing: 0.1em;
-        color: #34d399;
+        color: #2563eb;
         margin-top: 0.2rem;
     }
     .designer-badge {
         font-family: 'DM Mono', monospace;
         font-size: 0.75rem;
-        background: rgba(52, 211, 153, 0.1);
-        border: 1px solid rgba(52, 211, 153, 0.2);
-        color: #34d399;
+        background: rgba(37, 99, 235, 0.08);
+        border: 1px solid rgba(37, 99, 235, 0.2);
+        color: #2563eb;
         padding: 0.25rem 0.75rem;
         border-radius: 20px;
         letter-spacing: 0.05em;
@@ -64,10 +64,10 @@ st.markdown(
 
     /* Calculator Main Container Wrapper */
     div[data-testid="stVerticalBlockBorderWrapper"] {
-        background: linear-gradient(155deg, rgba(20, 28, 24, 0.95), rgba(12, 17, 14, 0.98));
-        border: 1px solid rgba(255, 255, 255, 0.08);
+        background: linear-gradient(155deg, rgba(255, 255, 255, 0.95), rgba(241, 245, 249, 0.98));
+        border: 1px solid rgba(226, 232, 240, 0.8);
         border-radius: 24px;
-        box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        box-shadow: 0 20px 45px rgba(15, 23, 42, 0.08), inset 0 1px 0 rgba(255, 255, 255, 1);
         backdrop-filter: blur(12px);
     }
     div[data-testid="stVerticalBlockBorderWrapper"] > div {
@@ -76,24 +76,24 @@ st.markdown(
 
     /* Display Screen Styling */
     .stTextInput input {
-        background: #070a09;
-        color: #ecfdf5;
-        border: 1px solid rgba(255, 255, 255, 0.1);
+        background: #ffffff;
+        color: #0f172a;
+        border: 1px solid #cbd5e1;
         border-radius: 14px;
         font: 500 clamp(1.2rem, 3.5vw, 1.6rem) 'DM Mono', monospace;
         min-height: 4.5rem;
         padding: 0 1.25rem;
-        box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.4);
+        box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.02);
         transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
     }
     .stTextInput input:focus {
-        border-color: #34d399;
-        box-shadow: 0 0 0 3px rgba(52, 211, 153, 0.2), inset 0 2px 6px rgba(0, 0, 0, 0.4);
+        border-color: #2563eb;
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15), inset 0 2px 4px rgba(0, 0, 0, 0.02);
     }
 
     /* Result Preview Box */
     .answer {
-        color: #34d399;
+        color: #2563eb;
         font: 500 0.9rem 'DM Mono', monospace;
         text-align: right;
         min-height: 1.4rem;
@@ -104,74 +104,75 @@ st.markdown(
     /* Base Button Styling */
     .stButton button {
         min-height: 3.25rem;
-        border: 1px solid rgba(255, 255, 255, 0.06);
+        border: 1px solid #e2e8f0;
         border-radius: 12px;
-        background: linear-gradient(180deg, rgba(35, 48, 40, 0.8), rgba(24, 34, 28, 0.9));
-        color: #d1d5db;
+        background: linear-gradient(180deg, #ffffff, #f8fafc);
+        color: #334155;
         font: 600 0.9rem 'DM Mono', monospace;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+        box-shadow: 0 2px 4px rgba(15, 23, 42, 0.03), inset 0 1px 0 rgba(255, 255, 255, 1);
         transition: all 120ms ease;
     }
     .stButton button:hover {
-        background: linear-gradient(180deg, rgba(45, 61, 51, 0.9), rgba(30, 43, 35, 0.95));
-        border-color: rgba(52, 211, 153, 0.3);
-        color: #ffffff;
+        background: linear-gradient(180deg, #f1f5f9, #e2e8f0);
+        border-color: #cbd5e1;
+        color: #0f172a;
         transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+        box-shadow: 0 4px 10px rgba(15, 23, 42, 0.06);
     }
     .stButton button:active {
         transform: translateY(1px);
-        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
     }
     .stButton button:focus-visible {
-        outline: 2px solid #34d399;
+        outline: 2px solid #2563eb;
         outline-offset: 2px;
     }
 
     /* Category Specific Key Styling */
     div[class*="st-key-calc-key-scientific"] button {
-        background: rgba(28, 38, 32, 0.7);
-        color: #9ca3af;
-        border-color: rgba(255, 255, 255, 0.04);
+        background: #f1f5f9;
+        color: #475569;
+        border-color: #e2e8f0;
         font-size: 0.82rem;
     }
     div[class*="st-key-calc-key-operator"] button {
-        background: linear-gradient(180deg, rgba(42, 60, 48, 0.9), rgba(31, 46, 36, 0.9));
-        color: #6ee7b7;
-        border-color: rgba(52, 211, 153, 0.15);
+        background: linear-gradient(180deg, #eff6ff, #dbeafe);
+        color: #1d4ed8;
+        border-color: #bfdbfe;
     }
     div[class*="st-key-calc-key-utility"] button {
-        background: linear-gradient(180deg, rgba(74, 38, 35, 0.8), rgba(56, 27, 25, 0.9));
-        color: #fca5a5;
-        border-color: rgba(239, 68, 68, 0.2);
+        background: linear-gradient(180deg, #fef2f2, #fee2e2);
+        color: #dc2626;
+        border-color: #fecaca;
     }
     div[class*="st-key-calc-key-equals"] button {
-        background: linear-gradient(180deg, #34d399, #059669);
-        color: #061a12;
-        border-color: #6ee7b7;
+        background: linear-gradient(180deg, #2563eb, #1d4ed8);
+        color: #ffffff;
+        border-color: #3b82f6;
         font-weight: 700;
         font-size: 1.1rem;
-        box-shadow: 0 4px 16px rgba(52, 211, 153, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+        box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
     }
     div[class*="st-key-calc-key-equals"] button:hover {
-        background: linear-gradient(180deg, #6ee7b7, #10b981);
-        color: #04120c;
-        box-shadow: 0 6px 20px rgba(52, 211, 153, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+        background: linear-gradient(180deg, #3b82f6, #2563eb);
+        color: #ffffff;
+        box-shadow: 0 6px 18px rgba(37, 99, 235, 0.4);
     }
 
     /* Radio button / angle mode styling */
     div[data-testid="stRadio"] label {
         font-size: 0.82rem;
         font-family: 'DM Mono', monospace;
+        color: #475569;
     }
     
     .stCaption {
-        color: #6b7280;
+        color: #64748b;
         font-size: 0.8rem;
     }
     
     hr {
-        border-color: rgba(255, 255, 255, 0.06);
+        border-color: #e2e8f0;
     }
 
     /* Responsive adjustments */
@@ -374,7 +375,7 @@ for key, initial_value in (
     if key not in st.session_state:
         st.session_state[key] = initial_value
 
-# Clean custom brand header block
+# Brand Header Block featuring ASIF SADIQ
 st.markdown(
     """
     <div class="brand-container">
