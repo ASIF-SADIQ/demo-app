@@ -4,267 +4,562 @@ import math
 import operator
 
 import streamlit as st
-st.title("ASIF SADIQ")
+import streamlit.components.v1 as components
 
 st.set_page_config(page_title="Orbit Scientific Calculator", page_icon="∑", layout="centered")
 
 st.markdown(
-	"""
-	<style>
-	@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap');
-	:root { color-scheme: dark; }
-	.stApp { background: #111614; color: #eef4ef; }
-	[data-testid="stHeader"] { background: transparent; }
-	[data-testid="stMainBlockContainer"] { max-width: 680px; padding-top: 3rem; }
-	h1, h2, h3, p, label { font-family: 'Manrope', sans-serif; }
-	.eyebrow { color: #91b4a1; font: 500 0.76rem 'DM Mono', monospace; letter-spacing: 0.08em; text-transform: uppercase; }
-	.stTextInput input {
-		background: #1b2420; color: #f1f7f2; border: 1px solid #394940;
-		border-radius: 8px; font: 500 1.55rem 'DM Mono', monospace; min-height: 3.8rem;
-	}
-	.stTextInput input:focus { border-color: #b5e66d; box-shadow: 0 0 0 1px #b5e66d; }
-	.stButton button {
-		min-height: 3rem; border: 1px solid #344139; border-radius: 7px;
-		background: #202a24; color: #e4ece5; font: 600 0.96rem 'DM Mono', monospace;
-		transition: background 120ms ease, border-color 120ms ease, transform 120ms ease;
-	}
-	.stButton button:hover { background: #2b3830; border-color: #9eb5a5; color: #fff; transform: translateY(-1px); }
-	.stButton button:focus-visible { outline: 2px solid #b5e66d; outline-offset: 2px; }
-	div[data-testid="stRadio"] label { font-size: 0.88rem; }
-	.answer { color: #b5e66d; font: 500 0.9rem 'DM Mono', monospace; text-align: right; min-height: 1.35rem; }
-	.stCaption { color: #91a197; }
-	hr { border-color: #344139; }
-	</style>
-	""",
-	unsafe_allow_html=True,
+    """
+    <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+    
+    :root { color-scheme: dark; }
+
+    .stApp {
+        background: 
+            radial-gradient(circle at 50% -20%, rgba(52, 211, 153, 0.12), transparent 55%),
+            radial-gradient(circle at 100% 100%, rgba(16, 185, 129, 0.05), transparent 40%),
+            #0b0f0e;
+        color: #f1f5f3;
+        font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    [data-testid="stHeader"] { background: transparent; }
+    [data-testid="stMainBlockContainer"] { max-width: 680px; padding-top: 2rem; padding-bottom: 3rem; }
+
+    /* Brand Header Styling */
+    .brand-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        margin-bottom: 1.5rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        padding-bottom: 1rem;
+    }
+    .brand-title {
+        font-size: 1.25rem;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+        color: #ffffff;
+        margin: 0;
+    }
+    .brand-subtitle {
+        font-family: 'DM Mono', monospace;
+        font-size: 0.72rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: #34d399;
+        margin-top: 0.2rem;
+    }
+    .designer-badge {
+        font-family: 'DM Mono', monospace;
+        font-size: 0.75rem;
+        background: rgba(52, 211, 153, 0.1);
+        border: 1px solid rgba(52, 211, 153, 0.2);
+        color: #34d399;
+        padding: 0.25rem 0.75rem;
+        border-radius: 20px;
+        letter-spacing: 0.05em;
+    }
+
+    /* Calculator Main Container Wrapper */
+    div[data-testid="stVerticalBlockBorderWrapper"] {
+        background: linear-gradient(155deg, rgba(20, 28, 24, 0.95), rgba(12, 17, 14, 0.98));
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 24px;
+        box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(12px);
+    }
+    div[data-testid="stVerticalBlockBorderWrapper"] > div {
+        padding: 1.5rem;
+    }
+
+    /* Display Screen Styling */
+    .stTextInput input {
+        background: #070a09;
+        color: #ecfdf5;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 14px;
+        font: 500 clamp(1.2rem, 3.5vw, 1.6rem) 'DM Mono', monospace;
+        min-height: 4.5rem;
+        padding: 0 1.25rem;
+        box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.4);
+        transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .stTextInput input:focus {
+        border-color: #34d399;
+        box-shadow: 0 0 0 3px rgba(52, 211, 153, 0.2), inset 0 2px 6px rgba(0, 0, 0, 0.4);
+    }
+
+    /* Result Preview Box */
+    .answer {
+        color: #34d399;
+        font: 500 0.9rem 'DM Mono', monospace;
+        text-align: right;
+        min-height: 1.4rem;
+        overflow-wrap: anywhere;
+        letter-spacing: 0.02em;
+    }
+
+    /* Base Button Styling */
+    .stButton button {
+        min-height: 3.25rem;
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        border-radius: 12px;
+        background: linear-gradient(180deg, rgba(35, 48, 40, 0.8), rgba(24, 34, 28, 0.9));
+        color: #d1d5db;
+        font: 600 0.9rem 'DM Mono', monospace;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+        transition: all 120ms ease;
+    }
+    .stButton button:hover {
+        background: linear-gradient(180deg, rgba(45, 61, 51, 0.9), rgba(30, 43, 35, 0.95));
+        border-color: rgba(52, 211, 153, 0.3);
+        color: #ffffff;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    }
+    .stButton button:active {
+        transform: translateY(1px);
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    }
+    .stButton button:focus-visible {
+        outline: 2px solid #34d399;
+        outline-offset: 2px;
+    }
+
+    /* Category Specific Key Styling */
+    div[class*="st-key-calc-key-scientific"] button {
+        background: rgba(28, 38, 32, 0.7);
+        color: #9ca3af;
+        border-color: rgba(255, 255, 255, 0.04);
+        font-size: 0.82rem;
+    }
+    div[class*="st-key-calc-key-operator"] button {
+        background: linear-gradient(180deg, rgba(42, 60, 48, 0.9), rgba(31, 46, 36, 0.9));
+        color: #6ee7b7;
+        border-color: rgba(52, 211, 153, 0.15);
+    }
+    div[class*="st-key-calc-key-utility"] button {
+        background: linear-gradient(180deg, rgba(74, 38, 35, 0.8), rgba(56, 27, 25, 0.9));
+        color: #fca5a5;
+        border-color: rgba(239, 68, 68, 0.2);
+    }
+    div[class*="st-key-calc-key-equals"] button {
+        background: linear-gradient(180deg, #34d399, #059669);
+        color: #061a12;
+        border-color: #6ee7b7;
+        font-weight: 700;
+        font-size: 1.1rem;
+        box-shadow: 0 4px 16px rgba(52, 211, 153, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    }
+    div[class*="st-key-calc-key-equals"] button:hover {
+        background: linear-gradient(180deg, #6ee7b7, #10b981);
+        color: #04120c;
+        box-shadow: 0 6px 20px rgba(52, 211, 153, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+    }
+
+    /* Radio button / angle mode styling */
+    div[data-testid="stRadio"] label {
+        font-size: 0.82rem;
+        font-family: 'DM Mono', monospace;
+    }
+    
+    .stCaption {
+        color: #6b7280;
+        font-size: 0.8rem;
+    }
+    
+    hr {
+        border-color: rgba(255, 255, 255, 0.06);
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 520px) {
+        [data-testid="stMainBlockContainer"] { padding: 1rem 0.5rem; }
+        div[data-testid="stVerticalBlockBorderWrapper"] > div { padding: 1rem; }
+        .stButton button { min-height: 2.8rem; border-radius: 10px; font-size: 0.8rem; }
+    }
+    </style>
+    """,
+    unsafe_allow_html=True,
 )
 
 
 def _trig(function, inverse=False):
-	def apply(value):
-		angle_mode = st.session_state.get("angle_mode", "RAD")
-		if inverse:
-			result = function(value)
-			return math.degrees(result) if angle_mode == "DEG" else result
-		argument = math.radians(value) if angle_mode == "DEG" else value
-		return function(argument)
+    def apply(value):
+        angle_mode = st.session_state.get("angle_mode", "RAD")
+        if inverse:
+            result = function(value)
+            return math.degrees(result) if angle_mode == "DEG" else result
+        argument = math.radians(value) if angle_mode == "DEG" else value
+        return function(argument)
 
-	return apply
+    return apply
 
 
 def _factorial(value):
-	if not isinstance(value, (int, float)) or not float(value).is_integer() or value < 0:
-		raise ValueError("Factorial requires a non-negative integer")
-	return math.factorial(int(value))
+    if not isinstance(value, (int, float)) or not float(value).is_integer() or value < 0:
+        raise ValueError("Factorial requires a non-negative integer")
+    return math.factorial(int(value))
 
 
 def _evaluate(expression):
-	if not expression.strip():
-		raise ValueError("Enter an expression first")
-	if len(expression) > 240:
-		raise ValueError("Expression is too long")
+    if not expression.strip():
+        raise ValueError("Enter an expression first")
+    if len(expression) > 240:
+        raise ValueError("Expression is too long")
 
-	normalized = (
-		expression.replace("π", "pi")
-		.replace("×", "*")
-		.replace("÷", "/")
-		.replace("−", "-")
-		.replace("^", "**")
-	)
-	tree = ast.parse(normalized, mode="eval")
-	binary_operators = {
-		ast.Add: operator.add,
-		ast.Sub: operator.sub,
-		ast.Mult: operator.mul,
-		ast.Div: operator.truediv,
-		ast.FloorDiv: operator.floordiv,
-		ast.Mod: operator.mod,
-		ast.Pow: operator.pow,
-	}
-	unary_operators = {ast.UAdd: operator.pos, ast.USub: operator.neg}
-	functions = {
-		"sin": _trig(math.sin),
-		"cos": _trig(math.cos),
-		"tan": _trig(math.tan),
-		"asin": _trig(math.asin, inverse=True),
-		"acos": _trig(math.acos, inverse=True),
-		"atan": _trig(math.atan, inverse=True),
-		"sinh": math.sinh,
-		"cosh": math.cosh,
-		"tanh": math.tanh,
-		"sqrt": math.sqrt,
-		"ln": math.log,
-		"log": math.log10,
-		"log2": math.log2,
-		"exp": math.exp,
-		"abs": abs,
-		"fact": _factorial,
-		"floor": math.floor,
-		"ceil": math.ceil,
-		"degrees": math.degrees,
-		"radians": math.radians,
-	}
-	constants = {
-		"pi": math.pi,
-		"e": math.e,
-		"tau": math.tau,
-		"ans": st.session_state.get("answer_value", 0),
-	}
-	def visit(node):
-		if isinstance(node, ast.Expression):
-			return visit(node.body)
-		if isinstance(node, ast.Constant) and type(node.value) in (int, float):
-			return node.value
-		if isinstance(node, ast.Name) and node.id in constants:
-			return constants[node.id]
-		if isinstance(node, ast.UnaryOp) and type(node.op) in unary_operators:
-			return unary_operators[type(node.op)](visit(node.operand))
-		if isinstance(node, ast.BinOp) and type(node.op) in binary_operators:
-			if isinstance(node.op, ast.Pow):
-				exponent = visit(node.right)
-				if abs(exponent) > 1000:
-					raise ValueError("Exponent is too large")
-				value = binary_operators[type(node.op)](visit(node.left), exponent)
-			else:
-				value = binary_operators[type(node.op)](visit(node.left), visit(node.right))
-			return value
-		if isinstance(node, ast.Call) and isinstance(node.func, ast.Name) and node.func.id in functions:
-			if node.keywords or len(node.args) != 1:
-				raise ValueError("Functions take exactly one argument")
-			return functions[node.func.id](visit(node.args[0]))
-		raise ValueError("That expression is not supported")
+    normalized = (
+        expression.replace("π", "pi")
+        .replace("×", "*")
+        .replace("÷", "/")
+        .replace("−", "-")
+        .replace("^", "**")
+    )
+    tree = ast.parse(normalized, mode="eval")
+    binary_operators = {
+        ast.Add: operator.add,
+        ast.Sub: operator.sub,
+        ast.Mult: operator.mul,
+        ast.Div: operator.truediv,
+        ast.FloorDiv: operator.floordiv,
+        ast.Mod: operator.mod,
+        ast.Pow: operator.pow,
+    }
+    unary_operators = {ast.UAdd: operator.pos, ast.USub: operator.neg}
+    functions = {
+        "sin": _trig(math.sin),
+        "cos": _trig(math.cos),
+        "tan": _trig(math.tan),
+        "asin": _trig(math.asin, inverse=True),
+        "acos": _trig(math.acos, inverse=True),
+        "atan": _trig(math.atan, inverse=True),
+        "sinh": math.sinh,
+        "cosh": math.cosh,
+        "tanh": math.tanh,
+        "sqrt": math.sqrt,
+        "ln": math.log,
+        "log": math.log10,
+        "log2": math.log2,
+        "exp": math.exp,
+        "abs": abs,
+        "fact": _factorial,
+        "floor": math.floor,
+        "ceil": math.ceil,
+        "degrees": math.degrees,
+        "radians": math.radians,
+    }
+    constants = {
+        "pi": math.pi,
+        "e": math.e,
+        "tau": math.tau,
+        "ans": st.session_state.get("answer_value", 0),
+    }
 
-	result = visit(tree)
-	if isinstance(result, complex) or not isinstance(result, (int, float)):
-		raise ValueError("Result is not a real number")
-	if isinstance(result, int):
-		if result.bit_length() > 4096:
-			raise ValueError("Result is too large")
-		return result
-	if not math.isfinite(result):
-		raise ValueError("Result is not finite")
-	return result
+    def visit(node):
+        if isinstance(node, ast.Expression):
+            return visit(node.body)
+        if isinstance(node, ast.Constant) and type(node.value) in (int, float):
+            return node.value
+        if isinstance(node, ast.Name) and node.id in constants:
+            return constants[node.id]
+        if isinstance(node, ast.UnaryOp) and type(node.op) in unary_operators:
+            return unary_operators[type(node.op)](visit(node.operand))
+        if isinstance(node, ast.BinOp) and type(node.op) in binary_operators:
+            if isinstance(node.op, ast.Pow):
+                exponent = visit(node.right)
+                if abs(exponent) > 1000:
+                    raise ValueError("Exponent is too large")
+                value = binary_operators[type(node.op)](visit(node.left), exponent)
+            else:
+                value = binary_operators[type(node.op)](visit(node.left), visit(node.right))
+            return value
+        if isinstance(node, ast.Call) and isinstance(node.func, ast.Name) and node.func.id in functions:
+            if node.keywords or len(node.args) != 1:
+                raise ValueError("Functions take exactly one argument")
+            return functions[node.func.id](visit(node.args[0]))
+        raise ValueError("That expression is not supported")
+
+    result = visit(tree)
+    if isinstance(result, complex) or not isinstance(result, (int, float)):
+        raise ValueError("Result is not a real number")
+    if isinstance(result, int):
+        if result.bit_length() > 4096:
+            raise ValueError("Result is too large")
+        return result
+    if not math.isfinite(result):
+        raise ValueError("Result is not finite")
+    return result
 
 
 def _display_number(value):
-	if isinstance(value, int):
-		return str(value)
-	if value.is_integer() and abs(value) < 1e15:
-		return str(int(value))
-	return format(value, ".12g")
+    if isinstance(value, int):
+        return str(value)
+    if value.is_integer() and abs(value) < 1e15:
+        return str(int(value))
+    return format(value, ".12g")
 
 
 def _complete_parentheses(expression):
-	open_parentheses = expression.count("(")
-	close_parentheses = expression.count(")")
-	if open_parentheses > close_parentheses:
-		return expression + ")" * (open_parentheses - close_parentheses)
-	return expression
+    open_parentheses = expression.count("(")
+    close_parentheses = expression.count(")")
+    if open_parentheses > close_parentheses:
+        return expression + ")" * (open_parentheses - close_parentheses)
+    return expression
 
 
-def _calculate(keep_expression=False):
-	expression = _complete_parentheses(st.session_state.get("expression", ""))
-	try:
-		value = _evaluate(expression)
-		result = _display_number(value)
-		st.session_state.previous_expression = expression
-		st.session_state.answer_value = value
-		st.session_state.last_result = result
-		if not keep_expression:
-			st.session_state.expression = result
-		st.session_state.calculation_error = ""
-		st.session_state.history.insert(0, (expression, result))
-		del st.session_state.history[8:]
-	except (ArithmeticError, SyntaxError, ValueError, TypeError, OverflowError) as error:
-		st.session_state.calculation_error = str(error) or "Unable to calculate this expression"
+def _calculate():
+    expression = _complete_parentheses(st.session_state.get("expression", ""))
+    try:
+        value = _evaluate(expression)
+        result = _display_number(value)
+        st.session_state.previous_expression = expression
+        st.session_state.answer_value = value
+        st.session_state.last_result = result
+        st.session_state.expression = result
+        st.session_state.calculation_complete = True
+        st.session_state.calculation_error = ""
+        st.session_state.history.insert(0, (expression, result))
+        del st.session_state.history[8:]
+    except (ArithmeticError, SyntaxError, ValueError, TypeError, OverflowError) as error:
+        st.session_state.calculation_complete = False
+        st.session_state.calculation_error = str(error) or "Unable to calculate this expression"
+
+
+def _clear():
+    st.session_state.expression = ""
+    st.session_state.answer_value = 0
+    st.session_state.previous_expression = ""
+    st.session_state.last_result = ""
+    st.session_state.calculation_complete = False
+    st.session_state.calculation_error = ""
 
 
 def _press(token):
-	if token == "AC":
-		st.session_state.expression = ""
-		st.session_state.calculation_error = ""
-	elif token == "⌫":
-		st.session_state.expression = st.session_state.get("expression", "")[:-1]
-		st.session_state.calculation_error = ""
-	elif token == "=" :
-		_calculate()
-	elif token == "Ans":
-		st.session_state.expression = st.session_state.get("expression", "") + "ans"
-		st.session_state.calculation_error = ""
-	else:
-		st.session_state.expression = st.session_state.get("expression", "") + token
-		st.session_state.calculation_error = ""
+    if token == "AC":
+        _clear()
+    elif token == "⌫":
+        st.session_state.expression = st.session_state.get("expression", "")[:-1]
+        st.session_state.calculation_complete = False
+        st.session_state.previous_expression = ""
+        st.session_state.last_result = ""
+        st.session_state.calculation_error = ""
+    elif token == "=":
+        _calculate()
+    else:
+        expression = st.session_state.get("expression", "")
+        if st.session_state.get("calculation_complete", False):
+            if token in ("+", "−", "×", "÷", "^", "%"):
+                expression = st.session_state.last_result
+            else:
+                expression = ""
+                st.session_state.previous_expression = ""
+                st.session_state.last_result = ""
+        st.session_state.expression = expression + ("ans" if token == "Ans" else token)
+        st.session_state.calculation_complete = False
+        st.session_state.calculation_error = ""
 
 
 for key, initial_value in (
-	("expression", ""),
-	("answer_value", 0),
-	("previous_expression", ""),
-	("last_result", ""),
-	("calculation_error", ""),
-	("history", []),
-	("angle_mode", "RAD"),
+    ("expression", ""),
+    ("answer_value", 0),
+    ("previous_expression", ""),
+    ("last_result", ""),
+    ("calculation_complete", False),
+    ("calculation_error", ""),
+    ("history", []),
+    ("angle_mode", "RAD"),
 ):
-	if key not in st.session_state:
-		st.session_state[key] = initial_value
+    if key not in st.session_state:
+        st.session_state[key] = initial_value
 
-
-st.markdown('<div class="eyebrow">ORBIT / SCIENTIFIC</div>', unsafe_allow_html=True)
-st.title("Calculator")
-st.caption("A precise workspace for everyday calculations and deeper explorations.")
-
-mode_col, result_col = st.columns([1, 2])
-with mode_col:
-	st.radio("Angle mode", ["RAD", "DEG"], horizontal=True, key="angle_mode", label_visibility="collapsed")
-with result_col:
-	if st.session_state.previous_expression and st.session_state.last_result:
-		st.markdown(
-			f'<div class="answer">{st.session_state.previous_expression} = {st.session_state.last_result}</div>',
-			unsafe_allow_html=True,
-		)
-	else:
-		st.markdown('<div class="answer">&nbsp;</div>', unsafe_allow_html=True)
-
-st.text_input(
-	"Expression",
-	placeholder="Type an expression, e.g. sin(30) + sqrt(16)",
-	key="expression",
-	on_change=_calculate,
-	args=(True,),
-	label_visibility="collapsed",
+# Clean custom brand header block
+st.markdown(
+    """
+    <div class="brand-container">
+        <div>
+            <h1 class="brand-title">Orbit Scientific</h1>
+            <div class="brand-subtitle">Precision Computation System</div>
+        </div>
+        <div class="designer-badge">ASIF SADIQ</div>
+    </div>
+    """,
+    unsafe_allow_html=True,
 )
-if st.session_state.calculation_error:
-	st.error(st.session_state.calculation_error)
-else:
-	st.caption("Type and press Enter, or use the keypad. Use * for multiplication and ^ for powers.")
 
-st.markdown("<div style='height: 0.55rem'></div>", unsafe_allow_html=True)
-keypad = [
-	[("sin", "sin("), ("cos", "cos("), ("tan", "tan("), ("ln", "ln("), ("log", "log(")],
-	[("asin", "asin("), ("acos", "acos("), ("atan", "atan("), ("√", "sqrt("), ("π", "π")],
-	[("sinh", "sinh("), ("cosh", "cosh("), ("tanh", "tanh("), ("e", "e"), ("^", "^")],
-	[("7", "7"), ("8", "8"), ("9", "9"), ("÷", "÷"), ("(", "(")],
-	[("4", "4"), ("5", "5"), ("6", "6"), ("×", "×"), (")", ")")],
-	[("1", "1"), ("2", "2"), ("3", "3"), ("−", "−"), ("+", "+")],
-	[("0", "0"), (".", "."), ("Ans", "Ans"), ("%", "%"), ("!x", "fact(")],
-	[("AC", "AC"), ("⌫", "⌫"), ("10ˣ", "10**("), ("=", "="), ("", "")],
-]
+with st.container(border=True):
+    mode_col, result_col = st.columns([1, 2], vertical_alignment="center")
+    with mode_col:
+        st.radio("Angle mode", ["RAD", "DEG"], horizontal=True, key="angle_mode", label_visibility="collapsed")
+    with result_col:
+        if st.session_state.previous_expression and st.session_state.last_result:
+            st.markdown(
+                f'<div class="answer" data-result="{html.escape(st.session_state.last_result, quote=True)}" data-calculation-complete="true">{html.escape(st.session_state.previous_expression)} = {html.escape(st.session_state.last_result)}</div>',
+                unsafe_allow_html=True,
+            )
+        else:
+            st.markdown('<div class="answer" data-calculation-complete="false">&nbsp;</div>', unsafe_allow_html=True)
 
-for row_index, row in enumerate(keypad):
-	columns = st.columns(5, gap="small")
-	for column_index, (column, (label, token)) in enumerate(zip(columns, row)):
-		if label:
-			column.button(
-				label,
-				key=f"key_{row_index}_{column_index}",
-				on_click=_press,
-				args=(token,),
-				use_container_width=True,
-				type="primary" if label == "=" else "secondary",
-			)
+    st.text_input(
+        "Expression",
+        placeholder="Type expression, e.g. sin(30) + sqrt(16)",
+        key="expression",
+        on_change=_calculate,
+        label_visibility="collapsed",
+    )
+    if st.session_state.calculation_error:
+        st.error(st.session_state.calculation_error)
+    else:
+        st.caption("Keyboard shortcuts active: numbers, operators, Enter/=, Backspace, Esc.")
+
+    st.markdown("<div style='height: 0.5rem'></div>", unsafe_allow_html=True)
+    keypad = [
+        [("sin", "sin("), ("cos", "cos("), ("tan", "tan("), ("ln", "ln("), ("log", "log(")],
+        [("asin", "asin("), ("acos", "acos("), ("atan", "atan("), ("√", "sqrt("), ("π", "π")],
+        [("sinh", "sinh("), ("cosh", "cosh("), ("tanh", "tanh("), ("e", "e"), ("^", "^")],
+        [("7", "7"), ("8", "8"), ("9", "9"), ("÷", "÷"), ("(", "(")],
+        [("4", "4"), ("5", "5"), ("6", "6"), ("×", "×"), (")", ")")],
+        [("1", "1"), ("2", "2"), ("3", "3"), ("−", "−"), ("+", "+")],
+        [("0", "0"), (".", "."), ("Ans", "Ans"), ("%", "%"), ("!x", "fact(")],
+        [("AC", "AC"), ("⌫", "⌫"), ("10ˣ", "10**("), ("=", "="), ("", "")],
+    ]
+
+    for row_index, row in enumerate(keypad):
+        columns = st.columns(5, gap="small")
+        for column_index, (column, (label, token)) in enumerate(zip(columns, row)):
+            if label:
+                if label == "=":
+                    category = "equals"
+                elif label in ("AC", "⌫"):
+                    category = "utility"
+                elif label in ("+", "−", "×", "÷", "^", "%", "(", ")"):
+                    category = "operator"
+                elif label.isdigit() or label == ".":
+                    category = "number"
+                else:
+                    category = "scientific"
+                column.button(
+                    label,
+                    key=f"calc-key-{category}-{row_index}-{column_index}",
+                    on_click=_press,
+                    args=(token,),
+                    use_container_width=True,
+                    type="primary" if label == "=" else "secondary",
+                )
 
 if st.session_state.history:
-	st.divider()
-	with st.expander("Recent calculations"):
-		for expression, result in st.session_state.history:
-			st.markdown(f"`{html.escape(expression)}` = **{result}**")
+    st.divider()
+    with st.expander("Recent calculations history"):
+        for expression, result in st.session_state.history:
+            st.markdown(f"`{html.escape(expression)}` = **{result}**")
+
+components.html(
+    """
+    <script>
+    const appWindow = window.parent;
+    const appDocument = appWindow.document;
+    const buttonTokens = {
+        "sin": "sin(", "cos": "cos(", "tan": "tan(", "ln": "ln(", "log": "log(",
+        "asin": "asin(", "acos": "acos(", "atan": "atan(", "√": "sqrt(", "π": "π",
+        "sinh": "sinh(", "cosh": "cosh(", "tanh": "tanh(", "e": "e", "^": "^",
+        "÷": "÷", "×": "×", "−": "−", "+": "+", "(": "(", ")": ")",
+        "%": "%", "Ans": "ans", "!x": "fact(", "10ˣ": "10**(",
+        "0": "0", "1": "1", "2": "2", "3": "3", "4": "4",
+        "5": "5", "6": "6", "7": "7", "8": "8", "9": "9", ".": "."
+    };
+    const keyButtonSelector = '[class*="st-key-calc-key-"] button';
+    const inputSelector = '[data-testid="stTextInput"] input';
+    const answerSelector = '.answer[data-calculation-complete="true"]';
+    const operatorTokens = new Set(["+", "−", "×", "÷", "^", "%"]);
+    const valueSetter = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, "value").set;
+
+    function currentInput() {
+        return appDocument.querySelector(inputSelector);
+    }
+
+    function setExpression(input, value) {
+        valueSetter.call(input, value);
+        input.dispatchEvent(new Event("input", { bubbles: true }));
+    }
+
+    function appendToken(token) {
+        const input = currentInput();
+        if (!input) return;
+        let expression = input.value;
+        const answer = appDocument.querySelector(answerSelector);
+        const result = answer?.dataset.result;
+        const isShowingResult = answer && result === expression;
+        if (isShowingResult) {
+            expression = operatorTokens.has(token) ? result : "";
+        }
+        setExpression(input, expression + token);
+    }
+
+    if (appWindow.__orbitCalculatorKeyHandler) {
+        appDocument.removeEventListener("keydown", appWindow.__orbitCalculatorKeyHandler, true);
+        appDocument.removeEventListener("click", appWindow.__orbitCalculatorClickHandler, true);
+    }
+    appWindow.__orbitCalculatorKeyHandler = function(event) {
+        if (event.ctrlKey || event.metaKey || event.altKey) return;
+        const input = currentInput();
+        if (event.key === "Escape" || event.key === "Delete") {
+            const clearButton = Array.from(appDocument.querySelectorAll(keyButtonSelector))
+                .find((button) => button.textContent.trim() === "AC");
+            if (clearButton) {
+                event.preventDefault();
+                event.stopPropagation();
+                clearButton.click();
+            }
+            return;
+        }
+        if (event.key === "Enter" || event.key === "=") {
+            if (input && event.target === input) return;
+            const equalsButton = Array.from(appDocument.querySelectorAll(keyButtonSelector))
+                .find((button) => button.textContent.trim() === "=");
+            if (equalsButton) {
+                event.preventDefault();
+                event.stopPropagation();
+                equalsButton.click();
+            }
+            return;
+        }
+        if (input && event.target === input) return;
+        if (event.key === "Backspace") {
+            if (!input) return;
+            event.preventDefault();
+            event.stopPropagation();
+            setExpression(input, input.value.slice(0, -1));
+            return;
+        }
+        const token = ({
+            "-": "−", "*": "×", "/": "÷"
+        })[event.key] || event.key;
+        if (/^[0-9a-zA-Z.]$/.test(token) || ["+", "−", "×", "÷", "^", "%", "(", ")"].includes(token)) {
+            event.preventDefault();
+            event.stopPropagation();
+            appendToken(token);
+        }
+    };
+    appWindow.__orbitCalculatorClickHandler = function(event) {
+        const button = event.target.closest(keyButtonSelector);
+        if (!button) return;
+        const label = button.textContent.trim();
+        if (label === "=" || label === "AC") return;
+        if (label === "⌫") {
+            const input = currentInput();
+            if (input) setExpression(input, input.value.slice(0, -1));
+        } else if (buttonTokens[label]) {
+            appendToken(buttonTokens[label]);
+        } else {
+            return;
+        }
+        event.preventDefault();
+        event.stopPropagation();
+    };
+    appDocument.addEventListener("keydown", appWindow.__orbitCalculatorKeyHandler, true);
+    appDocument.addEventListener("click", appWindow.__orbitCalculatorClickHandler, true);
+    </script>
+    """,
+    height=0,
+)
