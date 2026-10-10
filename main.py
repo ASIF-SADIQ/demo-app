@@ -4,7 +4,7 @@ import math
 import operator
 
 import streamlit as st
-
+st.title("ASIF SADIQ")
 
 st.set_page_config(page_title="Orbit Scientific Calculator", page_icon="∑", layout="centered")
 
@@ -154,15 +154,24 @@ def _display_number(value):
 	return format(value, ".12g")
 
 
-def _calculate():
-	expression = st.session_state.get("expression", "")
+def _complete_parentheses(expression):
+	open_parentheses = expression.count("(")
+	close_parentheses = expression.count(")")
+	if open_parentheses > close_parentheses:
+		return expression + ")" * (open_parentheses - close_parentheses)
+	return expression
+
+
+def _calculate(keep_expression=False):
+	expression = _complete_parentheses(st.session_state.get("expression", ""))
 	try:
 		value = _evaluate(expression)
 		result = _display_number(value)
 		st.session_state.previous_expression = expression
 		st.session_state.answer_value = value
 		st.session_state.last_result = result
-		st.session_state.expression = result
+		if not keep_expression:
+			st.session_state.expression = result
 		st.session_state.calculation_error = ""
 		st.session_state.history.insert(0, (expression, result))
 		del st.session_state.history[8:]
@@ -221,6 +230,7 @@ st.text_input(
 	placeholder="Type an expression, e.g. sin(30) + sqrt(16)",
 	key="expression",
 	on_change=_calculate,
+	args=(True,),
 	label_visibility="collapsed",
 )
 if st.session_state.calculation_error:
