@@ -1,9 +1,4 @@
-"""
-Pro Scientific Calculator Application
-Built with Python, Streamlit, and uv.
-Featuring Keyboard-First Interaction, Permanent Blinking Cursor,
-Auto-Closing Parentheses, and Complete Scientific Functions.
-"""
+
 
 from __future__ import annotations
 
