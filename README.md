@@ -10,7 +10,7 @@ Engineered for seamless physical keyboard workflow: continuous typing without mo
 
 ### 1. Run the application
 ```bash
-uv run streamlit run app.py
+uv run streamlit run main.py
 ```
 
 Open your browser to `http://127.0.0.1:8501`.
