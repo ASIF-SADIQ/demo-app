@@ -599,7 +599,6 @@ def get_calculator_html() -> str:
 
     <div class="calc-status-group">
       <button class="mode-pill active" id="btn-deg-toggle" title="Toggle Angle Mode (Shortcut: d)">DEG</button>
-      <button class="icon-btn" id="btn-audio-toggle" title="Toggle Audio Haptics">🔊 Sound</button>
       <button class="icon-btn" id="btn-history-toggle" title="Toggle Calculation History">🕒 History</button>
       <button class="icon-btn" id="btn-theme-help" title="Keyboard Shortcuts Reference">⌨️ Shortcuts</button>
     </div>
@@ -780,7 +779,6 @@ def get_calculator_html() -> str:
   const evalResult = document.getElementById('eval-result');
   const memIndicator = document.getElementById('mem-indicator');
   const btnDegToggle = document.getElementById('btn-deg-toggle');
-  const btnAudioToggle = document.getElementById('btn-audio-toggle');
   const btnHistoryToggle = document.getElementById('btn-history-toggle');
   const historyDrawer = document.getElementById('history-drawer');
   const historyList = document.getElementById('history-list');
@@ -1627,13 +1625,6 @@ def get_calculator_html() -> str:
     playClick();
   });
 
-  btnAudioToggle.addEventListener('click', () => {
-    soundEnabled = !soundEnabled;
-    btnAudioToggle.textContent = soundEnabled ? '🔊 Sound' : '🔇 Muted';
-    btnAudioToggle.classList.toggle('active', soundEnabled);
-    showToast(soundEnabled ? 'Audio feedback ON' : 'Audio feedback MUTED');
-    ensureFocus();
-  });
 
   btnHistoryToggle.addEventListener('click', () => {
     historyDrawer.classList.toggle('open');
