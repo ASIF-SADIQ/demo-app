@@ -5,8 +5,6 @@ Featuring Keyboard-First Interaction, Permanent Blinking Cursor,
 Auto-Closing Parentheses, and Complete Scientific Functions.
 """
 
-st
-
 from __future__ import annotations
 
 import importlib
@@ -40,7 +38,6 @@ def setup_page() -> None:
             background: radial-gradient(circle at 50% 0%, #111827 0%, #090d16 100%);
             color: #f8fafc;
         }
-        /* Hide unnecessary Streamlit chrome elements */
         #MainMenu {visibility: hidden;}
         footer {visibility: hidden;}
         header {visibility: hidden;}
@@ -113,7 +110,7 @@ def render_sidebar() -> None:
                     ⚡ Auto-Close Parentheses
                 </div>
                 <div style="font-size:12px; color:#94a3b8;">
-                    No need to manually type closing brackets like <code>)</code>. Expressions like <code>cos(90</code> or <code>sin(30 + cos(45</code> evaluate directly on <span class="kbd-badge">Enter</span>!
+                    No need to manually type closing brackets like <code>)</code>. Expressions like <code>cos(90</code> evaluate directly on <span class="kbd-badge">Enter</span>!
                 </div>
             </div>
             """,
@@ -130,9 +127,19 @@ def main() -> None:
     setup_page()
     render_sidebar()
 
+    st.markdown(
+        """
+        <div style="text-align: center; margin-bottom: 12px;">
+            <h1 style="font-size: 32px; font-weight: 800; letter-spacing: 1.5px; background: linear-gradient(135deg, #c7d2fe 0%, #818cf8 40%, #6366f1 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin: 0; text-transform: uppercase;">ASIF SADIQ</h1>
+            <p style="color: #94a3b8; font-size: 13px; margin-top: 4px; font-weight: 500; letter-spacing: 0.5px;">FX Scientific Calculator Pro</p>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
     # Render the pure keyboard-first scientific calculator component
     html_code = get_calculator_html()
-    components.html(html_code, height=750, scrolling=False)
+    components.html(html_code, height=780, scrolling=False)
 
 
 if __name__ == "__main__":

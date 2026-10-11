@@ -1,7 +1,27 @@
 [project]
-name = "demo-app"
+name = "calculator"
 version = "0.1.0"
-requires-python = ">=3.10"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Muhammad Asif Sadiq", email = "asifsadiq488@gmail.com" }
+]
+requires-python = ">=3.13"
 dependencies = [
-    "streamlit",
+    "numpy>=2.5.4",
+    "pandas>=3.0.6",
+    "streamlit>=1.65.0",
+    "sympy>=1.14.0",
+]
+
+[project.scripts]
+calculator = "calculator:main"
+
+[build-system]
+requires = ["uv_build>=0.12.19,<0.13.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "pytest>=9.1.1",
 ]
